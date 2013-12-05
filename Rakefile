@@ -2,6 +2,7 @@ require 'rake'
 require 'rake/clean'
 require 'rake/testtask'
 require 'rbconfig'
+require 'rubygems/package'
 include RbConfig
 
 CLEAN.include(
@@ -172,7 +173,7 @@ namespace :gem do
     # https://github.com/rubygems/rubygems/issues/147
     spec.original_platform = spec.platform
 
-    Gem::Builder.new(spec).build
+    Gem::Package.build(spec)
   end
 
   desc 'Install the sys-proctable library as a gem'
