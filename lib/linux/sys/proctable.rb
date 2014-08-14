@@ -130,10 +130,7 @@ module Sys
         struct.environ = {}
 
         begin
-          untrusted_environ_content = IO.read("/proc/#{file}/environ")
-          ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
-          valid_environ_content = ic.iconv(untrusted_environ_content + ' ')[0..-2]
-          valid_environ_content.split("\0").each{ |str|
+          IO.read("/proc/#{file}/environ").force_encoding('iso-859-1').split("\0").each{ |str|
             key, value = str.split('=')
             struct.environ[key] = value
           }
